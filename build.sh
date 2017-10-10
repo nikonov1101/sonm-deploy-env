@@ -2,7 +2,12 @@
 
 # git is required
 # go >= 1.8 is required
-# packages 'debhelper devscripts dh-systemd' is required
+#
+# requirements to build .deb packages
+# apt-get install debhelper devscripts dh-systemd -y
+#
+# requirements to build Worker with GPU support
+# apt-get install opencl-headers nvidia-opencl-dev --no-install-recommends
 
 set -ex
 

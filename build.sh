@@ -9,40 +9,59 @@ set -ex
 CWD=$(pwd)
 CORE=${HOME}/go/src/github.com/sonm-io/core
 GIT=$(which git)
-GO=$(which go)
 
+# Build with GPU support
+GPU_SURROT=true
+
+if [[ -z $(which go) ]];
+then
+    # fallback to typical install path for linux systems
+    export GO="/usr/local/go/bin/go"
+else
+    # or use obtained path
+    export GO=$(which go)
+fi
 
 update_repo ()
 {
-    cd ${CORE} || exit
+    cd ${CORE} || exit 127
     ${GIT} reset --hard
     ${GIT} pull
 }
 
 build_debs ()
 {
-    GPU_SURROT=true GO=$(which go) make deb
+    make deb
 }
 
 install_debs ()
 {
-    cd ${CORE}/.. || exit
-    dpkg -i *.deb
+    cd ${CORE}/.. || exit 127
+    dpkg -i sonm-cli_*.deb
+    dpkg -i sonm-hub_*.deb
+    dpkg -i sonm-miner_*.deb
+
+    if [[ -n "${FULL_INSTALL}" ]]; then
+        dpkg -i sonm-marketplace_*.deb
+        # dpkg -i sonm-locator_*.deb
+    fi
 }
 
 update_configs ()
 {
-    echo "[*] UPDATING CONFIGS"
     cp ${CWD}/dist-configs/hub.yaml /etc/sonm/hub-default.yaml
     cp ${CWD}/dist-configs/miner.yaml /etc/sonm/miner-default.yaml
 }
 
 restart_services ()
 {
-    echo "[*] RESTARTING SERVICES"
     systemctl restart sonm-hub
     systemctl restart sonm-miner
-    systemctl restart sonm-marketplace
+
+    if [[ -n "${FULL_INSTALL}" ]]; then
+        systemctl restart sonm-marketplace
+        # systemctl restart sonm-locator
+    fi
 }
 
 

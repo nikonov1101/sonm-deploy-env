@@ -1,0 +1,15 @@
+endpoint: "0.0.0.0:10002"
+monitoring:
+  endpoint: "0.0.0.0:10001"
+
+
+# Ethereum boot nodes.
+bootnodes:
+  - "enode://aaff8b588b3c2bde265504c78cb33449d8b5659bc172278e50abc73a2521fbd938aefd097c077efae316754b115f4e27b5126c6785cd51932331ba224c8734c1@127.0.0.1:30348"
+  - "enode://aaff8b588b3c2bde265504c78cb33449d8b5659bc172278e50abc73a2521fbd938aefd097c077efae316754b115f4e27b5126c6785cd51932331ba224c8734c2@127.0.0.1:30348"
+
+logging:
+  level: -1
+
+ethereum:
+  private_key: "d07fff36ef2c3d15144974c25d3f5c061ae830a81eefd44292588b3cea2c701c"

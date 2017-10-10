@@ -48,7 +48,7 @@ install_debs ()
 
     if [[ -n "${FULL_INSTALL}" ]]; then
         dpkg -i sonm-marketplace_*.deb
-        # dpkg -i sonm-locator_*.deb
+        dpkg -i sonm-locator_*.deb
     fi
 }
 
@@ -65,7 +65,7 @@ restart_services ()
 
     if [[ -n "${FULL_INSTALL}" ]]; then
         systemctl restart sonm-marketplace
-        # systemctl restart sonm-locator
+        systemctl restart sonm-locator
     fi
 }
 

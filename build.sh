@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# git is required
+# go >= 1.8 is required
+# packages 'debhelper devscripts dh-systemd' is required
+
 set -ex
 
 CWD=$(pwd)
@@ -42,9 +46,9 @@ restart_services ()
 }
 
 
-# update_repo
-# build_debs
-# install_debs
+update_repo
+build_debs
+install_debs
 
 update_configs
 restart_services

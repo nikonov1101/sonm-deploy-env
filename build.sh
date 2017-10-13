@@ -14,6 +14,7 @@ set -ex
 CWD=$(pwd)
 CORE=${HOME}/go/src/github.com/sonm-io/core
 GIT=$(which git)
+DPKG="dpkg --force-confold -i"
 
 # Build with GPU support
 GPU_SURROT=true
@@ -42,20 +43,14 @@ build_debs ()
 install_debs ()
 {
     cd ${CORE}/.. || exit 127
-    dpkg -i sonm-cli_*.deb
-    dpkg -i sonm-hub_*.deb
-    dpkg -i sonm-miner_*.deb
+    ${DPKG} sonm-cli_*.deb
+    ${DPKG} sonm-hub_*.deb
+    ${DPKG} sonm-miner_*.deb
 
     if [[ -n "${FULL_INSTALL}" ]]; then
-        dpkg -i sonm-marketplace_*.deb
-        dpkg -i sonm-locator_*.deb
+        ${DPKG} sonm-marketplace_*.deb
+        ${DPKG} sonm-locator_*.deb
     fi
-}
-
-update_configs ()
-{
-    cp ${CWD}/dist-configs/hub.yaml /etc/sonm/hub-default.yaml
-    cp ${CWD}/dist-configs/miner.yaml /etc/sonm/miner-default.yaml
 }
 
 restart_services ()
@@ -72,7 +67,6 @@ restart_services ()
 
 update_repo
 build_debs
-install_debs
 
-update_configs
+install_debs
 restart_services

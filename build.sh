@@ -28,13 +28,6 @@ else
     export GO=$(which go)
 fi
 
-update_repo ()
-{
-    cd ${CORE} || exit 127
-    ${GIT} reset --hard
-    ${GIT} pull
-}
-
 build_debs ()
 {
     make deb
@@ -64,9 +57,6 @@ restart_services ()
     fi
 }
 
-
-update_repo
 build_debs
-
 install_debs
 restart_services
